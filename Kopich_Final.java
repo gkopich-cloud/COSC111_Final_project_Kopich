@@ -278,6 +278,28 @@ public static void choseRace(){
         break; 
     }
 }
+public static void chooseClass(int level){
+    Scanner kb=new Scanner(System.in);
+    System.out.println("What class would you like to make your character?:");//multiclassing not available in this version, where we would spread levels between classes
+    String[] classesList={"Barbarian", "Bard" ,"Cleric" ,"Druid" ,"Fighter" ,"Monk", "Paladin" ,"Ranger", "Rogue", "Sorcerer", "Warlock" , "Wizard." };
+    String yourClass="none";
+    for (int i=0;i<classesList.length;i++){
+       // System.out.println(i+1+": "+classesList[i]);
+       //would show all classes, but for times sake, we will only have 2 functional
+    }
+    System.out.println("1: Fighter");
+    System.out.println("2: Wizard");
+    int choice=kb.nextInt();
+    switch(choice){
+        case 1:
+            yourClass=classesList[4];
+            //hit dice
+            break;
+        case 2:
+
+    }
+    
+}
 public static String chooseBackground(){
     System.out.println("What background will your character be?: ");
     Scanner kb=new Scanner(System.in);
@@ -446,6 +468,7 @@ public static void printFile(String name,int level){
                 choseRace();
                 break;
                 case 5:
+                    chooseClass(level);
                 break;
                 case 6:
                 String background=chooseBackground();//brokern into 2 parts so i could return string background and string[] proficiencies
