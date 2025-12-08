@@ -5,6 +5,8 @@
  * a user enters, then put that information on a character sheet
  * 
  * @version PHASE 1 has fully completed(name,level,background), mostly completed(stats,race),partially completed(finish), and has not started(class,spells)
+ * @version PHASE 2 has fully completed(name,level,background), mostly completed(stats,race,class,finish), and have not started on (spells)
+ * race just has an issue with class creation, stats needs an optional addition, class just needs to ask for an inventory, and finish needs to edit all that in
  */
 import java.awt.Color;
 import java.awt.Font;
