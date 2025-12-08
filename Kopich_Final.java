@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 //testing push
 //test 2 electrig boolgaloo
 public class Kopich_Final {
+    static Kopich_Final_Class selectedClass=new Kopich_Final_Class();
 
     public static String chooseName(){
         String name;
@@ -41,12 +42,12 @@ public static int random6(){
     }
     return rand;
 }
-public static void chooseStats(){
+public static int[] chooseStats(){
 System.out.println("Now, how would you like to get your characters stats?");
         System.out.println("1.Roll 4d6 drop the lowest");
         System.out.println("2.Roll 3d6");
         System.out.println("3.Standard array");
-        System.out.println("4.Point buy");
+        System.out.println("4.Point buy(not implimented)");
         Scanner kb=new Scanner(System.in);
         int choice=kb.nextInt();
         int[] returnedStats={0,0,0,0,0,0};
@@ -138,13 +139,14 @@ System.out.println("Now, how would you like to get your characters stats?");
             returnedStats[i]=stats[foundJ];
             System.out.println("Your "+ statNames[i]+" is now "+returnedStats[i]);
             stats[foundJ]=0;
+            
         }
     }
     selectingValues=false;
         }
 
     
-
+return returnedStats;
 
 
 }
@@ -278,11 +280,18 @@ public static void choseRace(){
         break; 
     }
 }
-public static void chooseClass(int level){
+public static String chooseClass(int level){
     Scanner kb=new Scanner(System.in);
     System.out.println("What class would you like to make your character?:");//multiclassing not available in this version, where we would spread levels between classes
     String[] classesList={"Barbarian", "Bard" ,"Cleric" ,"Druid" ,"Fighter" ,"Monk", "Paladin" ,"Ranger", "Rogue", "Sorcerer", "Warlock" , "Wizard." };
     String yourClass="none";
+    //int hitDice=8;
+    int[]savingThrowProf={0,0,0,0,0,0};
+    String[] classProficiencyList=new String[18];
+        String[] proficienciesList={"acrobatics","animalHandling","arcana","athletics","deception","history","insight","intimidation","investigation","medicine","nature","perception","performance","persuasion","religion","sleight","stealth","survival"};
+
+    double spellProgression;//traks what spell
+
     for (int i=0;i<classesList.length;i++){
        // System.out.println(i+1+": "+classesList[i]);
        //would show all classes, but for times sake, we will only have 2 functional
@@ -292,13 +301,27 @@ public static void chooseClass(int level){
     int choice=kb.nextInt();
     switch(choice){
         case 1:
-            yourClass=classesList[4];
-            //hit dice
+            yourClass=classesList[4];//string fighter
+            selectedClass.setClass(yourClass);
+
+            System.out.println(selectedClass.getYourClass());
+            //hitDice=10;
+            //spellProgression=0;
+            //classProficiencyList[0]="test";//do in for loop
+            //savingThrowProf[0]=1;
+            //savingThrowProf[2]=1;//maybe assign in class?
             break;
         case 2:
-
+            yourClass=classesList[11];//string wizard
+            //hitDice=6;
+            break;
     }
-    
+    //class class(yourClass,level)
+    //class methods
+    //ask what proficiencies from list
+    //set health
+    //get spell level(for spell list)
+    return yourClass;
 }
 public static String chooseBackground(){
     System.out.println("What background will your character be?: ");
@@ -319,7 +342,7 @@ public static String chooseBackground(){
 }
 public static String[] BackgroundProficiencyGetter(String background){
     String[] backgrounds={"Acolyte","Charlatan","Criminal","Entertainer","Folk Hero","Guild Artisan","Hermit","Noble","Outlander","Sage","Sailor","Soldier", "Urchin"};
-    String[] proficienciesList={"acrobatics","animalHandling","arcana","athletics","deception","history","insight","intimidation","investigation","medicine","nature","perception","performance","persuasion","religion","sleight","stealth","survival",};
+    String[] proficienciesList={"acrobatics","animalHandling","arcana","athletics","deception","history","insight","intimidation","investigation","medicine","nature","perception","performance","persuasion","religion","sleight","stealth","survival"};
     int[] proficiencyBackground=new int[18];//will give a 1 if proficient, 0 if not. this will be based on background
     int choice=0;
     for(int i=0;i<backgrounds.length;i++){
@@ -395,11 +418,27 @@ System.out.print("As a "+background+" you gain proficiency in the following: ");
 
 }
 
-public static void printFile(String name,int level){
+public static void printFile(String name,int level, String yourClass, String background,int[] stats){
     //edits a png with all our information
     try{
         File input=new File("charactersheet.png");
         BufferedImage image=ImageIO.read(input);
+
+        //getting proficiency bonus from level
+        int profBonus=2;
+        if(level>4){
+            profBonus=3;
+            if(level>8){
+                profBonus=4;
+                if(level>12){
+                    profBonus=5;
+                    if(level>16){
+                        profBonus=6;
+                    }
+                }
+            }
+        }
+        String positiveSign="";
 
         //editing options like size,color, and font
         Graphics2D g2d=image.createGraphics();
@@ -408,7 +447,27 @@ public static void printFile(String name,int level){
 
         //editing the file
         g2d.drawString(name,160,210);
-        g2d.drawString(""+level,750,170);
+        g2d.drawString(""+level+" "+yourClass,750,170);
+        g2d.drawString(""+background+" ",950,170);
+        g2d.drawString("+"+profBonus,280,500);
+        //drawing stats and caculating modifier
+        double tempMod;
+        int[] mods={0,0,0,0,0,0};
+        for(int i=0;i<6;i++){
+            g2d.drawString(""+stats[i],140,(550+200*i));
+            tempMod=(stats[i]-10)/2;
+            mods[i]=(int)tempMod;
+            if(mods[i]>=0){
+                positiveSign="+";
+            }
+            else{
+                positiveSign="";
+            }
+            g2d.drawString(""+positiveSign+mods[i],140,(470+200*i));
+
+
+        }
+
         //more code will go here
 
         //putting new file as output
@@ -435,6 +494,10 @@ public static void printFile(String name,int level){
         int profBonus;
         boolean inProgress=true;
         String name="default";
+        String yourClass="no class";
+        String background="no bakcgorund";
+        int[] stats={0,0,0,0,0,0};
+        //Kopich_Final_Class selectedClass=new Kopich_Final_Class();
 
 
 
@@ -462,20 +525,20 @@ public static void printFile(String name,int level){
                 level=chooseLevel(name);
                 break;
                 case 3:
-                chooseStats();
+                stats=chooseStats();
                 break;
                 case 4:
                 choseRace();
                 break;
                 case 5:
-                    chooseClass(level);
+                yourClass=chooseClass(level);
                 break;
                 case 6:
-                String background=chooseBackground();//brokern into 2 parts so i could return string background and string[] proficiencies
+                background=chooseBackground();//brokern into 2 parts so i could return string background and string[] proficiencies
                 String[] backgroundProficiencies= BackgroundProficiencyGetter(background);
                 break;
                 case 8:
-                printFile(name,level);//we will eventaully bring most data through here, but only these are implemented for demonstration purposes
+                printFile(name,level, selectedClass.getYourClass(),background,stats);//we will eventaully bring most data through here, but only these are implemented for demonstration purposes
                 inProgress=false;
                 break; 
             }

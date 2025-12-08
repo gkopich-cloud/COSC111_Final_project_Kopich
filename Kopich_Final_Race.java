@@ -145,5 +145,12 @@ public class Kopich_Final_Race {
         }
 
     }
+    public int getSpeed(){
+        return this.speed;
+    }
+    public int[] getRaceBonus(){
+        return this.raceBonus;
+    }
+    //add a get speed function
     
 }
