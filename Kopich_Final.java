@@ -13,6 +13,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.Arrays;
 import java.util.Scanner;
 import javax.imageio.ImageIO;
 //testing push
@@ -285,7 +286,7 @@ public static void choseRace(){
 public static String chooseClass(int level){
     Scanner kb=new Scanner(System.in);
     System.out.println("What class would you like to make your character?:");//multiclassing not available in this version, where we would spread levels between classes
-    String[] classesList={"Barbarian", "Bard" ,"Cleric" ,"Druid" ,"Fighter" ,"Monk", "Paladin" ,"Ranger", "Rogue", "Sorcerer", "Warlock" , "Wizard." };
+    String[] classesList={"Barbarian", "Bard" ,"Cleric" ,"Druid" ,"Fighter" ,"Monk", "Paladin" ,"Ranger", "Rogue", "Sorcerer", "Warlock" , "Wizard" };
     String yourClass="none";
     //int hitDice=8;
     int[]savingThrowProf={0,0,0,0,0,0};
@@ -315,14 +316,14 @@ public static String chooseClass(int level){
             break;
         case 2:
             yourClass=classesList[11];//string wizard
+            selectedClass.setClass(yourClass);
+            System.out.println(selectedClass.getYourClass());
             //hitDice=6;
             break;
     }
-    //class class(yourClass,level)
-    //class methods
-    //ask what proficiencies from list
-    //set health
-    //get spell level(for spell list)
+    selectedClass.askProficiencies(2);//int value can change based on class, but we don't have
+//any classes that use a different value in this version
+
     return yourClass;
 }
 public static String chooseBackground(){
@@ -466,9 +467,56 @@ public static void printFile(String name,int level, String yourClass, String bac
                 positiveSign="";
             }
             g2d.drawString(""+positiveSign+mods[i],140,(470+200*i));
-
-
         }
+        //initiative
+        if(mods[1]>=0){
+                positiveSign="+";
+            }
+            else{
+                positiveSign="";
+            }
+        g2d.drawString(""+positiveSign+mods[1],820,450);
+        
+        //health
+        int maxHP=selectedClass.getHealth(mods[3], level);
+        g2d.drawString(""+level+"d"+selectedClass.getHitDice(),700,910);
+        g2d.drawString(""+maxHP,800,570);
+
+        //saving throw proficiency
+        int isProficient=0;
+        for (int i=0;i<6;i++){
+            int[] temp=selectedClass.getSavingThrowProficiencies();
+            if(temp[i]==1){
+                g2d.drawString("●",276,600+i*37);
+                isProficient=profBonus;
+            }
+            else{
+                isProficient=0;
+            }
+            if((mods[i]+isProficient)>=0){
+                positiveSign="+";
+            }
+            else{
+                positiveSign="-";
+            }
+            g2d.drawString(""+(mods[i]+isProficient),315,600+i*37);
+        }
+
+        //String[] classProf=new String[4]; 
+        String[] proficienciesList={"acrobatics","animalHandling","arcana","athletics","deception","history","insight","intimidation","investigation","medicine","nature","perception","performance","persuasion","religion","sleight","stealth","survival"};
+
+        for(int i=0;i<18;i++){
+            if(Arrays.asList(selectedClass.GetClassProficiencies()).contains(proficienciesList[i])){
+                g2d.drawString("●",276,920+i*37);
+
+            }
+        
+        //System.out.println(selectedClass.GetClassProficiencies()[i]);
+        }
+        //76 starting at 908
+        //578
+
+        //skill proficiencies
 
         //more code will go here
 
