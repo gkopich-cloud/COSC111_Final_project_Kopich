@@ -11,6 +11,7 @@ public class Kopich_Final_Class {
     int[] classProficiencies=new int[18];
 //    String[] availableSkills=new String[16];
     String[] chosenSkills=new String[4];
+    String[] equipment=new String[20];
 
 
 
@@ -128,8 +129,9 @@ public class Kopich_Final_Class {
         for (int i=0;i<numberOfSkillProficiencies;i++){
             int count=0;
             for(int j=0;j<18;j++){
-                
+                //array aslist taken from ai fro the purpose of checking if string is in list
                 if (Arrays.asList(usableArray).contains(proficienciesList[j])){
+                    //this prevents us from printing what we have already selected
                     if(Arrays.asList(chosenSkills).contains(proficienciesList[j])==false){
                     System.out.println(count+1+". "+proficienciesList[j]);
 
@@ -157,5 +159,103 @@ public class Kopich_Final_Class {
         //System.out.println(chosenSkills[0]);
         return this.chosenSkills;
 
+    }
+    public void askEquipment(){
+        Scanner kb=new Scanner(System.in);
+        int choice;
+        for (int i=0;i<20;i++){
+            equipment[i]="";
+        }
+        System.out.println("Choose one from the following:");
+        switch(yourClass){
+            case "Fighter":
+                System.out.println("Equipment 1/4");
+                System.out.println("1. chain mail");
+                System.out.println("2. leather armor and a longbow");
+                choice=kb.nextInt();
+                if(choice==1){
+                    equipment[0]="Chainmail";
+                }
+                else{
+                    equipment[0]="leather";
+                    equipment[1]="longbow";
+                }
+
+                System.out.println("Equipment 2/4");
+                System.out.println("1. a longsword and shield");
+                System.out.println("2. two shortswords");
+                choice=kb.nextInt();
+                if(choice==1){
+                    equipment[2]="longsword";
+                    equipment[3]="shield";
+                }
+                else{
+                    equipment[2]="shortsword";
+                    equipment[3]="shortsword";
+                }
+                System.out.println("Equipment 3/4");
+                System.out.println("1. a light crossbow");
+                System.out.println("2. two handaxes");
+                choice=kb.nextInt();
+                if(choice==1){
+                    equipment[4]="lightCrossbow";
+                    
+                }
+                else{
+                    equipment[4]="handaxe";
+                    equipment[5]="handaxe";
+                }
+                System.out.println("Equipment 4/4");
+                System.out.println("1. a dungeoneer's pack");
+                System.out.println("2. an explorer's pack");
+                choice=kb.nextInt();
+                if(choice==1){
+                    equipment[6]="dungeoneer's pack";
+                }
+                else{
+                    equipment[6]="explorer's pack";
+                }
+
+
+            break;
+            case "Wizard":
+                System.out.println("Equipment 1/3");
+                System.out.println("1. a quarterstaff");
+                System.out.println("2. a dagger");
+                choice=kb.nextInt();
+                if(choice==1){
+                    equipment[0]="quarterstaff";
+                }
+                else{
+                    equipment[0]="dagger";
+                }
+                 System.out.println("Equipment 2/3");
+                System.out.println("1. a component pouch");
+                System.out.println("2. an arcane focus");
+                choice=kb.nextInt();
+                if(choice==1){
+                    equipment[1]="component pouch";
+                }
+                else{
+                    equipment[1]="arcane focus";
+                }
+                 System.out.println("Equipment 3/3");
+                System.out.println("1. a scholar's pack");
+                System.out.println("2. an explorer's pack");
+                choice=kb.nextInt();
+                if(choice==1){
+                    equipment[2]="scholar's pack";
+                }
+                else{
+                    equipment[2]="explorer's pack";
+                }
+                equipment[3]="spellbook";
+
+            break;
+        }
+        
+    }
+    public String[] getEquipment(){
+        return equipment;
     }
 }

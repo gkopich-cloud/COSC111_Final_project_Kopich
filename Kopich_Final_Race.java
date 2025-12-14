@@ -8,8 +8,22 @@ public class Kopich_Final_Race {
     int speed;//movement speed
     public Kopich_Final_Race(){
         //initialization
+        this.race="none";
+        this.subrace="subrace";
+        //this.raceBonus=[0,0,0,0,0,0];
+        //this.raceFeatures=raceFeatures;
+        this.speed=5;
     }
     public Kopich_Final_Race(String race,String subrace,int[] raceBonus, String[] raceFeatures,int speed){
+        //initialization 2: electric boogaloo
+        this.race=race;
+        this.subrace=subrace;
+        this.raceBonus=raceBonus;
+        this.raceFeatures=raceFeatures;
+        this.speed=speed;
+        //defining object
+    }
+    public void selectRace(String race,String subrace,int[] raceBonus, String[] raceFeatures,int speed){
         //initialization 2: electric boogaloo
         this.race=race;
         this.subrace=subrace;
@@ -27,7 +41,8 @@ public class Kopich_Final_Race {
         //not to be confused with the equally large list of similar data
         //this one is for the subrace only
         Scanner kb=new Scanner(System.in);
-        if ("none".equals(this.subrace)){
+        System.out.println(this.subrace);
+        if ("Human".equals(this.subrace)||"Half Elf".equals(this.subrace)||"Half Orc".equals(this.subrace)||"Tiefling".equals(this.subrace)){
             System.out.println("You do not have a subrace");
 
         }
@@ -101,17 +116,19 @@ public class Kopich_Final_Race {
                 this.raceBonus[4]=1;
                 //raceFeatures[5]="Ability Score Increase. Your Wisdom score increases by 1.";
                 raceFeatures[6]="Dwarven Toughness. Your hit point maximum increases by 1, and it increases by 1 every time you gain a level.";
+                 
                 break;
                 case 2:
                 this.subrace="Mountain dwarf";
                 this.raceBonus[0]=2;
                 //raceFeatures[5]="Ability Score Increase. Your Strength score increases by 2.";
-                raceFeatures[6]="Dwarven Armor Training. You have proficiency with light and medium armor.";                
+                raceFeatures[6]="Dwarven Armor Training. You have proficiency with light and medium armor.";   
+                              
                 break;
                 
             }
         }
-        kb.close();
+        
     }
         //!add
     }
@@ -151,6 +168,8 @@ public class Kopich_Final_Race {
     public int[] getRaceBonus(){
         return this.raceBonus;
     }
-    //add a get speed function
+    public String[] getRaceFeatures(){
+        return raceFeatures;
+    }
     
 }

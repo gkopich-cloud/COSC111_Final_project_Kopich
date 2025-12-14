@@ -20,6 +20,7 @@ import javax.imageio.ImageIO;
 //test 2 electrig boolgaloo
 public class Kopich_Final {
     static Kopich_Final_Class selectedClass=new Kopich_Final_Class();
+    static Kopich_Final_Race selectedRace=new Kopich_Final_Race();
 
     public static String chooseName(){
         String name;
@@ -165,7 +166,7 @@ public static void choseRace(){
     }
     int choice=kb.nextInt();
     int[]raceBonus={0,0,0,0,0,0};
-    String[] raceFeatures=new String[10];
+    String[] raceFeatures=new String[20];
     switch(choice){
         case 1:
         for(int i=0;i<6;i++){
@@ -173,8 +174,8 @@ public static void choseRace(){
         }
             
             raceFeatures[0]="Languages: You know common and 1 other language.";
-            Kopich_Final_Race human= new Kopich_Final_Race("Human","none",raceBonus, raceFeatures,30);
-            human.describeRace();
+            selectedRace.selectRace("Human","none",raceBonus, raceFeatures,30);
+            
         
         break;
         case 2:
@@ -186,10 +187,9 @@ public static void choseRace(){
             raceFeatures[2]="Trance: You only need 4 hours of rest to gain the benifits of a long rest.";
             raceFeatures[3]="Keen Senses. You have proficiency in the Perception skill.";
             raceFeatures[4]="Languages. You know Common and Elven.";
-            Kopich_Final_Race elf= new Kopich_Final_Race("Elf","none",raceBonus, raceFeatures,30);
+            selectedRace.selectRace("Elf","none",raceBonus, raceFeatures,30);
             //ask
-            elf.setSubrace();
-            elf.describeRace();
+            selectedRace.setSubrace();
         break;
         case 3:
         raceBonus[5]=2;//half elf
@@ -216,9 +216,8 @@ public static void choseRace(){
             raceFeatures[2]="Trance: You only need 4 hours of rest to gain the benifits of a long rest.";
             raceFeatures[3]="Skill Versatillity:You gain proficiency in two additional skills.";
             raceFeatures[4]="Languages. You know Common, Elven, and 1 additional language";
-            Kopich_Final_Race halfElf= new Kopich_Final_Race("Half Elf","none",raceBonus, raceFeatures,30);
-            halfElf.setSubrace();
-            halfElf.describeRace();
+            selectedRace.selectRace("Half Elf","none",raceBonus, raceFeatures,30);
+            selectedRace.setSubrace();
         break;
         case 4://half orc
         raceBonus[0]=2;
@@ -228,9 +227,8 @@ public static void choseRace(){
             raceFeatures[2]="Relentless Endurance. When you are reduced to 0 hit points but not killed outright, you can drop to 1 hit point instead. You can't use this feature again until you finish a long rest.";
             raceFeatures[3]="Savage Attacks. When you score a critical hit with a melee weapon attack, you can roll one of the weapon's damage dice one additional time and add it to the extra damage of the critical hit.";
             raceFeatures[4]="Languages. You know Common and Orc.";
-            Kopich_Final_Race halfOrc= new Kopich_Final_Race("Half Orc","none",raceBonus, raceFeatures,30);
-            halfOrc.setSubrace();
-            halfOrc.describeRace();
+            selectedRace.selectRace("Half Orc","none",raceBonus, raceFeatures,30);
+            selectedRace.setSubrace();
         break;
         case 5://halfling
         raceBonus[1]=2;
@@ -240,9 +238,8 @@ public static void choseRace(){
             raceFeatures[2]="Brave. You have advantage on saving throws against being frightened.";
             raceFeatures[3]="Nimble. You can move through the space of any creature that is of a size larger than yours.";
             raceFeatures[4]="Languages. You know Common and Halfling.";
-            Kopich_Final_Race halfling= new Kopich_Final_Race("Half Elf","none",raceBonus, raceFeatures,30);
-            halfling.setSubrace();
-            halfling.describeRace();
+            selectedRace.selectRace("Half Elf","none",raceBonus, raceFeatures,30);
+            selectedRace.setSubrace();
         break;
     
     case 6:
@@ -254,9 +251,8 @@ public static void choseRace(){
             raceFeatures[3]="Stonecunning: You have expertise in history checks related to the origin of stoneworks.";
             raceFeatures[4]="Short. You have a base movement speed of 25 feet.";
             raceFeatures[5]="Languages. You know Common and Dwarvish.";
-            Kopich_Final_Race dwarf= new Kopich_Final_Race("Dwarf","none",raceBonus, raceFeatures,25);
-            dwarf.setSubrace();
-            dwarf.describeRace();
+            selectedRace.selectRace("Dwarf","none",raceBonus, raceFeatures,25);
+            selectedRace.setSubrace();
         break;
     case 7://gnome
         raceBonus[3]=2;
@@ -265,9 +261,8 @@ public static void choseRace(){
             raceFeatures[1]="Short. You have a base movement speed of 25 feet.";
             raceFeatures[2]="Gnome Cunning. You have advantage on all Intelligence, Wisdom, and Charisma saves against magic.";
             raceFeatures[4]="Languages. You know Common and Gnomish.";
-            Kopich_Final_Race gnome= new Kopich_Final_Race("Gnome","none",raceBonus, raceFeatures,30);
-            gnome.setSubrace();
-            gnome.describeRace();
+            selectedRace.selectRace("Gnome","none",raceBonus, raceFeatures,30);
+            selectedRace.setSubrace();
         break;   
         case 8://tiefling
         raceBonus[5]=2;
@@ -277,11 +272,11 @@ public static void choseRace(){
             raceFeatures[0]="Darkvision: You can see in the dark up to 60ft.";
             raceFeatures[1]="Hellish Resistance. You have resistance to fire damage.";
             raceFeatures[4]="Languages. You know Common and Infernal.";
-            Kopich_Final_Race tiefling= new Kopich_Final_Race("Tiefling","none",raceBonus, raceFeatures,30);
-            tiefling.setSubrace();
-            tiefling.describeRace();
+            selectedRace.selectRace("Tiefling","none",raceBonus, raceFeatures,30);
+            selectedRace.setSubrace();
         break; 
     }
+    selectedRace.describeRace();
 }
 public static String chooseClass(int level){
     Scanner kb=new Scanner(System.in);
@@ -350,7 +345,7 @@ public static String[] BackgroundProficiencyGetter(String background){
     int choice=0;
     for(int i=0;i<backgrounds.length;i++){
         if(backgrounds[i].equals(background)){
-            choice=i;
+            choice=i+1;
         }
     }
     switch(choice){
@@ -409,19 +404,23 @@ public static String[] BackgroundProficiencyGetter(String background){
         
 }
 System.out.print("As a "+background+" you gain proficiency in the following: ");
+String[] backgroundProf=new String[2];
+int count=0;
         for(int i=0;i<proficiencyBackground.length;i++){
         
         if (proficiencyBackground[i]==1){
             System.out.print(proficienciesList[i]+" ");
+            backgroundProf[count]=proficienciesList[i];
+            count+=1;
         }
     }
     System.out.println("");
-    return proficienciesList;
+    return backgroundProf;
         
 
 }
 
-public static void printFile(String name,int level, String yourClass, String background,int[] stats){
+public static void printFile(String name,int level, String yourClass, String background,int[] stats,String[] backgroundProf){
     //edits a png with all our information
     try{
         File input=new File("charactersheet.png");
@@ -510,10 +509,48 @@ public static void printFile(String name,int level, String yourClass, String bac
                 g2d.drawString("●",276,920+i*37);
 
             }
-        
+            else if (Arrays.asList(backgroundProf).contains(proficienciesList[i])){
+                g2d.drawString("●",276,920+i*37);
+            }
         //System.out.println(selectedClass.GetClassProficiencies()[i]);
         }
-        //76 starting at 908
+        //equipment printing
+        int count=0;//count is the number of successful prints to avoid empty lines being printed
+        for (int i=0;i<20;i++){
+
+            if(selectedClass.getEquipment()[i]!=null){
+                g2d.drawString(selectedClass.getEquipment()[i],750,1700+(35*count));
+                count+=1;
+                //760 1600
+            }
+        }
+        count=0;
+        int countToTwenty=0;
+        String twentyLetters="";
+        String outputt="";
+        
+        
+        for (int i=0;i<20;i++){
+
+            String word=selectedRace.getRaceFeatures()[i];
+            if(selectedRace.getRaceFeatures()[i]!=null){
+
+                for (int j=0; j<word.length();j++){
+                    //the substring math parts wre made by ai for the purpose of a basic text wrap
+                    outputt=word.substring(0, Math.min(20, word.length()));
+                    word=word.substring(Math.min(20, word.length()));
+                    g2d.drawString(outputt,1200,1100+(32*count));
+                    count+=1;
+
+
+                }
+
+            
+            }
+            count+=1;
+        
+        }
+        //113- 2000
         //578
 
         //skill proficiencies
@@ -547,6 +584,7 @@ public static void printFile(String name,int level, String yourClass, String bac
         String yourClass="no class";
         String background="no bakcgorund";
         int[] stats={0,0,0,0,0,0};
+        String[] backgroundProficiencies={"test1","test2"};
         //Kopich_Final_Class selectedClass=new Kopich_Final_Class();
 
 
@@ -560,8 +598,8 @@ public static void printFile(String name,int level, String yourClass, String bac
             System.out.println("1. Name");
             System.out.println("2. Level");
             System.out.println("3. Stats");
-            System.out.println("4. Race");//mostly finished
-            System.out.println("5. Class");//not started
+            System.out.println("4. Race");
+            System.out.println("5. Class");
             System.out.println("6. Background");
             System.out.println("7. Spells");//not started
             System.out.println("8. Finish");//not complete
@@ -582,13 +620,16 @@ public static void printFile(String name,int level, String yourClass, String bac
                 break;
                 case 5:
                 yourClass=chooseClass(level);
+                selectedClass.askEquipment();
                 break;
                 case 6:
                 background=chooseBackground();//brokern into 2 parts so i could return string background and string[] proficiencies
-                String[] backgroundProficiencies= BackgroundProficiencyGetter(background);
+                backgroundProficiencies[0]= BackgroundProficiencyGetter(background)[0];
+                backgroundProficiencies[1]= BackgroundProficiencyGetter(background)[1];
+                System.out.println(backgroundProficiencies[0]);
                 break;
                 case 8:
-                printFile(name,level, selectedClass.getYourClass(),background,stats);//we will eventaully bring most data through here, but only these are implemented for demonstration purposes
+                printFile(name,level, selectedClass.getYourClass(),background,stats,backgroundProficiencies);//we will eventaully bring most data through here, but only these are implemented for demonstration purposes
                 inProgress=false;
                 break; 
             }
