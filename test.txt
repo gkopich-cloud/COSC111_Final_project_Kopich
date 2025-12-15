@@ -1,1 +1,5 @@
-just testing, please ignore
+design process and reasoning
+
+how I selected logic and algorithms
+
+lessons learned

@@ -51,7 +51,7 @@ System.out.println("Now, how would you like to get your characters stats?");
         System.out.println("1.Roll 4d6 drop the lowest");
         System.out.println("2.Roll 3d6");
         System.out.println("3.Standard array");
-        System.out.println("4.Point buy(not implimented)");
+       // System.out.println("4.Point buy(not implimented)");
         Scanner kb=new Scanner(System.in);
         int choice=kb.nextInt();
         int[] returnedStats={0,0,0,0,0,0};
@@ -154,6 +154,7 @@ return returnedStats;
 
 
 }
+//String[] raceFeatures=new String[20];
 public static void choseRace(){
     Scanner kb=new Scanner(System.in);
     
@@ -168,6 +169,7 @@ public static void choseRace(){
     int[]raceBonus={0,0,0,0,0,0};
     String[] raceFeatures=new String[20];
     switch(choice){
+        default://default case taken from ai
         case 1:
         for(int i=0;i<6;i++){
             raceBonus[i]=1;
@@ -298,6 +300,7 @@ public static String chooseClass(int level){
     System.out.println("2: Wizard");
     int choice=kb.nextInt();
     switch(choice){
+        default://default taken from ai
         case 1:
             yourClass=classesList[4];//string fighter
             selectedClass.setClass(yourClass);
@@ -349,6 +352,8 @@ public static String[] BackgroundProficiencyGetter(String background){
         }
     }
     switch(choice){
+        default:
+        //default taken from ai
         case 1:
         proficiencyBackground[14]=1;
         proficiencyBackground[6]=1;
@@ -503,36 +508,64 @@ public static void printFile(String name,int level, String yourClass, String bac
 
         //String[] classProf=new String[4]; 
         String[] proficienciesList={"acrobatics","animalHandling","arcana","athletics","deception","history","insight","intimidation","investigation","medicine","nature","perception","performance","persuasion","religion","sleight","stealth","survival"};
-
-        for(int i=0;i<18;i++){
-            if(Arrays.asList(selectedClass.GetClassProficiencies()).contains(proficienciesList[i])){
+        int chosenMod=0;
+        for(int i=0;i<18;i++){//aslist taken fromm ai
+            if(Arrays.asList(selectedClass.GetClassProficiencies()).contains(proficienciesList[i])||Arrays.asList(backgroundProf).contains(proficienciesList[i])){
                 g2d.drawString("●",276,920+i*37);
+                isProficient=profBonus;
+                
 
             }
             else if (Arrays.asList(backgroundProf).contains(proficienciesList[i])){
                 g2d.drawString("●",276,920+i*37);
+                isProficient=profBonus;
             }
+            else{
+                isProficient=0;
+            }
+            if(i==3){
+                chosenMod=mods[0];
+            }
+            else if(i==0||i==15||i==16){
+                chosenMod=mods[1];
+            }
+            else if (i==2||i==5||i==8||i==10||i==14){
+                chosenMod=mods[3];
+            }
+            else if (i==1||i==6||i==9||i==11||i==17){
+                chosenMod=mods[4];
+            }
+            else{
+                chosenMod=mods[5];
+            }
+            if (chosenMod>=0){
+                positiveSign="+";
+            }
+            else{
+                positiveSign="";
+            }
+            g2d.drawString(positiveSign+(isProficient+chosenMod),315,920+i*37);
         //System.out.println(selectedClass.GetClassProficiencies()[i]);
         }
         //equipment printing
         int count=0;//count is the number of successful prints to avoid empty lines being printed
-        for (int i=0;i<20;i++){
+        // for (int i=0;i<20;i++){
 
-            if(selectedClass.getEquipment()[i]!=null){
-                g2d.drawString(selectedClass.getEquipment()[i],750,1700+(35*count));
-                count+=1;
-                //760 1600
-            }
-        }
+        //     if(selectedClass.getEquipment()[i]!=null){
+        //         g2d.drawString(selectedClass.getEquipment()[i],750,1700+(35*count));
+        //         count+=1;
+        //         //760 1600
+        //     }
+        // }
+        //race name
+        g2d.drawString(""+selectedRace.getSubrace(),750,240);
+
+        //racial abilities
         count=0;
-        int countToTwenty=0;
-        String twentyLetters="";
         String outputt="";
-        
-        
         for (int i=0;i<20;i++){
-
             String word=selectedRace.getRaceFeatures()[i];
+            //System.out.println(word);
             if(selectedRace.getRaceFeatures()[i]!=null){
 
                 for (int j=0; j<word.length();j++){
@@ -541,21 +574,100 @@ public static void printFile(String name,int level, String yourClass, String bac
                     word=word.substring(Math.min(20, word.length()));
                     g2d.drawString(outputt,1200,1100+(32*count));
                     count+=1;
-
-
                 }
-
-            
             }
             count+=1;
-        
         }
-        //113- 2000
-        //578
+        //printing equipment
+        count=0;
+        boolean isWeapon=false;
+        int damage=4;
+        int weaponCount=0;
+        outputt="";
+         
+        for (int i=0;i<20;i++){
+            String item=selectedClass.getEquipment()[i];
+            int weaponMod=mods[0];
+            if(item!=""){
+                g2d.drawString(item,750,1660+(count*35));
+                //System.out.println(item);
+                //displaying weapon information. it would be better to use a class file for the weapons
+                if(item.equals("longsword")){
+                    isWeapon=true;
+                    damage=8;
+                }
+                else if(item.equals("dagger")){
+                    isWeapon=true;
+                    damage=4;
+                    weaponMod=Math.min(mods[0],mods[1]);//dagger uses the highest of dex or strength
+                }
+                else if(item.equals("quarterstaff")){
+                    isWeapon=true;
+                    damage=8;
+                }
+                else if(item.equals("longbow")){
+                    isWeapon=true;
+                    damage=8;
+                    weaponMod=mods[1];
+                }
+                else if(item.equals("shortsword")){
+                    isWeapon=true;
+                    damage=6;
+                }
+                else if(item.equals("handaxe")){
+                    isWeapon=true;
+                    damage=6;
+                }
+                else if(item.equals("light crossbow")){
+                    isWeapon=true;
+                    damage=8;
+                    weaponMod=mods[1];
+                }
+                if(isWeapon==true){
+                g2d.drawString(item,620, 1100+(40*weaponCount));
+                g2d.drawString(("1d "+damage),900,1100+(40*weaponCount));
+                if(weaponMod>=0){
+                    positiveSign="+";
+                }
+                else{
+                    positiveSign="";
+                }
+                g2d.drawString(""+positiveSign+(weaponMod+profBonus),800,1100+(40*weaponCount));
+                isWeapon=false;
+                weaponCount+=1;
+                }
+                count+=1;
+            }
+            
+        }
+        
 
-        //skill proficiencies
+        //gold
+        g2d.drawString("10",650,1920);//technically you can start with different amounts of gold than this, but for
+        //a small demo projcet like this, a set amount should be fine
 
-        //more code will go here
+        //armor class
+        int ac=10;//armor class
+        for (int i=0;i<20;i++){
+            if(selectedClass.getEquipment()[i].equals("leather armor")){
+                ac=11+mods[1];
+
+            }
+            else if(selectedClass.getEquipment()[i].equals("chainmail")){
+                ac=16;
+
+            }
+        }
+        for (int i=0;i<20;i++)//checking if they have a shield
+        if(selectedClass.getEquipment()[i].equals("shield")){
+            ac+=2;
+        }
+        g2d.drawString(""+ac,660,450);
+
+        //speed
+        g2d.drawString(""+selectedRace.getSpeed()+" ft",970,450);
+        // passive prof
+        //race name
 
         //putting new file as output
         g2d.dispose();
@@ -601,11 +713,12 @@ public static void printFile(String name,int level, String yourClass, String bac
             System.out.println("4. Race");
             System.out.println("5. Class");
             System.out.println("6. Background");
-            System.out.println("7. Spells");//not started
-            System.out.println("8. Finish");//not complete
+            //System.out.println("7. Spells");//not started
+            System.out.println("7. Finish");//not complete
             int choice=kb.nextInt();
             switch(choice){
-
+                default:
+                //default taken from ai
                 case 1:
                 name=chooseName();
                 break;

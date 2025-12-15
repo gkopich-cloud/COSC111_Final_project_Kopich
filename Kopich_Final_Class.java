@@ -1,3 +1,8 @@
+//@author Greg Kopich
+//@version fall 2025
+//this class file will be for parts related to a character's class
+//the name can be confusing as dnd classes are not java classes
+
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -24,6 +29,9 @@ public class Kopich_Final_Class {
         for(int i=0;i<6;i++){
         this.savingThrowProf[i]=0;
         }
+        for (int i=0;i<20;i++){
+            this.equipment[i]="";
+        }
 
     }
     public Kopich_Final_Class(String yourClass, int level){
@@ -37,6 +45,7 @@ public class Kopich_Final_Class {
     public int[] getSavingThrowProficiencies(){
         //System.out.println(yourClass);
         switch(yourClass){
+            default://taken from ai
             case "Fighter":
             this.savingThrowProf[0]=1;
             this.savingThrowProf[2]=1;
@@ -51,6 +60,7 @@ public class Kopich_Final_Class {
     }
     public int getHitDice(){
         switch(this.yourClass){
+            default://taken from ai
             case "Fighter":
                 this.hitDice=10;
                 break;
@@ -114,6 +124,7 @@ public class Kopich_Final_Class {
         System.out.println("Choose "+numberOfSkillProficiencies+" skills from the following list to be proficient in:");
         String[] usableArray=new String[18];
         switch(yourClass){
+            default://taken from ai
             case "Fighter":
                 String[] fighterSkills={"acrobatics","animalHandling","athletics","history","insight","intimidation","perception","survival"};
                 for(int i=0;i<fighterSkills.length;i++){
@@ -148,11 +159,11 @@ public class Kopich_Final_Class {
 
 
     }
-    System.out.print("You have proficiency in the following: ");
-    for (int i=0;i<chosenSkills.length;i++){
-        System.out.print(chosenSkills[i]+" ");
-    }
-    System.out.println("");
+    //System.out.print("You have proficiency in the following: ");
+    // for (int i=0;i<chosenSkills.length;i++){
+    //     System.out.print(chosenSkills[i]+" ");
+    // }
+    // System.out.println("");
                 
     }
     public String[] GetClassProficiencies(){
@@ -168,16 +179,17 @@ public class Kopich_Final_Class {
         }
         System.out.println("Choose one from the following:");
         switch(yourClass){
+            default://taken from ai
             case "Fighter":
                 System.out.println("Equipment 1/4");
                 System.out.println("1. chain mail");
                 System.out.println("2. leather armor and a longbow");
                 choice=kb.nextInt();
                 if(choice==1){
-                    equipment[0]="Chainmail";
+                    equipment[0]="chainmail";
                 }
                 else{
-                    equipment[0]="leather";
+                    equipment[0]="leather armor";
                     equipment[1]="longbow";
                 }
 

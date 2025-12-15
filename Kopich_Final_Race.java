@@ -1,17 +1,20 @@
+//@version fall 2025
+//@author Greg Kopich
+//this class file is for information related to a characers race
 import java.util.Scanner;
 
 public class Kopich_Final_Race {
     String race;
     String subrace;
     int[] raceBonus;//bonus that will be added to the 6 core stats(Strength, Dexterity,etc...)
-    String[] raceFeatures;//additional abilities related to race
+    String[] raceFeatures=new String[20];//additional abilities related to race
     int speed;//movement speed
     public Kopich_Final_Race(){
         //initialization
         this.race="none";
         this.subrace="subrace";
         //this.raceBonus=[0,0,0,0,0,0];
-        //this.raceFeatures=raceFeatures;
+        this.raceFeatures=new String[20];
         this.speed=5;
     }
     public Kopich_Final_Race(String race,String subrace,int[] raceBonus, String[] raceFeatures,int speed){
@@ -57,6 +60,7 @@ public class Kopich_Final_Race {
             System.out.println("3. Wood elf");
             int choice=kb.nextInt();
             switch(choice){
+                default://taken from ai
                 case 1:
                 this.subrace="Dark elf";
                 this.raceBonus[5]=1;
@@ -89,6 +93,7 @@ public class Kopich_Final_Race {
             System.out.println("2. Rock gnome");
             int choice=kb.nextInt();
             switch(choice){
+                default://taken from ai
                 case 1:
                 this.subrace="Forest";
                 this.raceBonus[1]=1;
@@ -111,6 +116,7 @@ public class Kopich_Final_Race {
             System.out.println("2. Mountain dwarf");
             int choice=kb.nextInt();
             switch(choice){
+                default://taken from ai
                 case 1:
                 this.subrace="Hill dwarf";
                 this.raceBonus[4]=1;
@@ -163,13 +169,22 @@ public class Kopich_Final_Race {
 
     }
     public int getSpeed(){
-        return this.speed;
+        return speed;
     }
     public int[] getRaceBonus(){
         return this.raceBonus;
     }
     public String[] getRaceFeatures(){
         return raceFeatures;
+    }
+    
+    public String getSubrace(){
+        if (subrace=="subrace"||subrace=="none"){
+            return race;
+        }
+        else{
+            return subrace;
+        }
     }
     
 }
